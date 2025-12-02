@@ -6,6 +6,10 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+    "types": [
+      "./node_modules/@mui/x-data-grid/material/augmentation.d.ts"
+    ],
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
