@@ -5,4 +5,4 @@ overrides:
   '@mui/x-data-grid': link:../mui-x/packages/x-data-grid/build
   '@mui/x-data-grid-pro': link:../mui-x/packages/x-data-grid-pro/build
   grid-test-merging: link:../grid-test-merging
-  '@base-ui-components/react': link:../base-ui/packages/react
+  '@base-ui/react': link:../base-ui/packages/react

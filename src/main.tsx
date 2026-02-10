@@ -21,11 +21,13 @@ const darkTheme = createTheme({
 // import Component from './debug';
 // import Component from './debug-r18';
 // import Component from './demo-base-ui/select';
-import Component from './demo-base-ui/detached-triggers';
-// import Component from './material-ui'
+// import Component from './demo-base-ui/contained-triggers';
+// import Component from './demo-base-ui/detached-triggers';
+import Component from './material-ui';
 // import Component from './perf-charts';
 // import Component from './perf-effects';
 // import Component from './perf-bui-combobox';
+// import Component from './perf-compare-frameworks';
 
 export default function App() {
   return (
@@ -40,7 +42,10 @@ export default function App() {
 
 let setShowBenchmark = (_: boolean) => {};
 
+const options = (Component as any).options || [];
+
 function PerfToolsContainer() {
+  const [option, setOption] = React.useState(options?.[0]);
   const [shouldRemoveOutliers, setShouldRemoveOutliers] = React.useState(false);
 
   const runBenchmark = (iterations = 10, warmupIterations = 5) => {
@@ -68,6 +73,24 @@ function PerfToolsContainer() {
   return (
     <div>
       <div>
+        {options.length > 0 && (
+          <select
+            value={option.value}
+            onChange={(ev) => {
+              const selectedOption = options.find(
+                (o: any) => o.value === ev.target.value,
+              );
+              setOption(selectedOption);
+            }}
+            style={{ marginRight: 8 }}
+          >
+            {options.map((opt: any) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.value}
+              </option>
+            ))}
+          </select>
+        )}
         <button onClick={() => setShowBenchmark((prev) => !prev)}>Toggle</button>
         <button onClick={() => runBenchmark(10, 5)} style={{ marginLeft: 8 }}>
           Run 10
@@ -88,12 +111,12 @@ function PerfToolsContainer() {
           Remove outliers
         </label>
       </div>
-      <Container />
+      <Container option={option} />
     </div>
   );
 }
 
-function Container() {
+function Container({ option }: { option: any }) {
   const [showBenchmark, setShowBenchmarkLocal] = React.useState(true);
 
   setShowBenchmark = setShowBenchmarkLocal;
@@ -102,7 +125,8 @@ function Container() {
     return null;
   }
 
-  return <Component />;
+  // @ts-ignore
+  return <Component option={option} />;
 }
 
 function logResults(results: number[]) {

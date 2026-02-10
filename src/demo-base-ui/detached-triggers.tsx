@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
-import { Menu } from '@base-ui-components/react/menu';
-import { Tooltip } from '@base-ui-components/react/tooltip';
+import { Menu } from '@base-ui/react/menu';
+import { Tooltip } from '@base-ui/react/tooltip';
 import menuDemoStyles from './menu-styles.module.css';
 import tooltipDemoStyles from './tooltip-styles.module.css';
 import styles from './perf.module.css';
@@ -30,7 +30,9 @@ const genericTooltipHandle = Tooltip.createHandle<string>();
 export default function Component() {
   return (
     <div>
-      <RowMenu />
+      {
+        // <RowMenu />
+      }
       <GenericTooltip />
       <div className={styles.rows}>
         {rows.map((row) => (
@@ -44,9 +46,9 @@ export default function Component() {
               // undefined
               <Tooltip.Trigger
                 handle={genericTooltipHandle}
-                render={(props) => (
-                  <Menu.Trigger {...props} handle={rowMenuHandle} payload={row} />
-                )}
+                // render={(props) => (
+                //   <Menu.Trigger {...props} handle={rowMenuHandle} payload={row} />
+                // )}
                 closeDelay={60 * 60 * 1000}
                 className={menuDemoStyles.Trigger}
                 payload={`Actions menu for ${row.label}`}

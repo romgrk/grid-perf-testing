@@ -34,15 +34,16 @@ const babelConfig = {
 // };
 
 // https://vitejs.dev/config/
+// prettier-ignore
 export default defineConfig({
   resolve: {
     alias: {
-      // 'react/jsx-runtime': '../react/build/node_modules/react/cjs/react-jsx-runtime.production.js',
-      // 'react/jsx-runtime-dev': '../react/build/node_modules/react/cjs/react-jsx-runtime.production.js',
-      // 'react-dom/client': '../react/build/node_modules/react-dom/cjs/react-dom.production.js',
-      // 'react-dom': '../react/build/node_modules/react-dom/cjs/react-dom.production.js',
-      // 'react': '../react/build/node_modules/react/cjs/react.production.js',
-      // 'react-dom/client': 'react-dom/profiling',
+      'react/jsx-runtime': '../react/build/node_modules/react/cjs/react-jsx-runtime.production.js',
+      'react/jsx-runtime-dev': '../react/build/node_modules/react/cjs/react-jsx-runtime.production.js',
+      'react-dom/client': '../react/build/node_modules/react-dom/cjs/react-dom-client.production.js',
+      'react-dom': '../react/build/node_modules/react-dom/cjs/react-dom.production.js',
+      'react': '../react/build/node_modules/react/cjs/react.production.js',
+      'scheduler': '../react/build/node_modules/scheduler/cjs/scheduler.production.js',
     },
   },
   build: {

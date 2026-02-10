@@ -1,22 +1,31 @@
 'use client';
 import * as React from 'react';
-import { Tooltip } from '@base-ui-components/react/tooltip';
+import { Menu } from '@base-ui/react/menu';
+import { Tooltip } from '@base-ui/react/tooltip';
 import menuDemoStyles from './demo-base-ui/menu-styles.module.css';
 import tooltipDemoStyles from './demo-base-ui/tooltip-styles.module.css';
 import styles from './demo-base-ui/perf.module.css';
 
 const rowCount = 1;
-
+const menuItemCount = 50;
 const rows = Array.from({ length: rowCount }).map((_, i) => ({
   label: `Row ${i + 1}`,
   index: i + 1,
 }));
+const menuItems = Array.from({ length: menuItemCount }).map((_, i) => ({
+  label: `Menu Item ${i + 1}`,
+  index: i + 1,
+}));
+
+const rowMenuHandle = Menu.createHandle<any>();
 
 const genericTooltipHandle = Tooltip.createHandle<string>();
 
 export default function Component() {
   return (
     <div>
+      <RowMenu />
+      <GenericTooltip />
       <div className={styles.rows}>
         {rows.map((row) => (
           <div key={row.index} className={styles.row}>
@@ -26,9 +35,24 @@ export default function Component() {
               // <Menu.Trigger handle={rowMenuHandle} payload={row} />
             }
             {
+              undefined
+              // <Tooltip.Trigger
+              //   handle={genericTooltipHandle}
+              //   closeDelay={60 * 60 * 1000}
+              //   className={menuDemoStyles.Trigger}
+              //   payload={`Actions menu for ${row.label}`}
+              //   data-id={row.index}
+              // >
+              //   •••
+              // </Tooltip.Trigger>
+            }
+            {
               // undefined
               <Tooltip.Trigger
                 handle={genericTooltipHandle}
+                render={(props) => (
+                  <Menu.Trigger {...props} handle={rowMenuHandle} payload={row} />
+                )}
                 closeDelay={60 * 60 * 1000}
                 className={menuDemoStyles.Trigger}
                 payload={`Actions menu for ${row.label}`}
@@ -40,7 +64,6 @@ export default function Component() {
           </div>
         ))}
       </div>
-      <GenericTooltip />
     </div>
   );
 }
@@ -82,5 +105,38 @@ function ArrowSvg(props: React.ComponentProps<'svg'>) {
         className={menuDemoStyles.ArrowInnerStroke}
       />
     </svg>
+  );
+}
+
+function RowMenu() {
+  return (
+    <Menu.Root handle={rowMenuHandle}>
+      {({ payload: rowData }) => (
+        <Menu.Portal>
+          <Menu.Positioner sideOffset={8} className={menuDemoStyles.Positioner}>
+            <Menu.Popup className={menuDemoStyles.Popup}>
+              <Menu.Arrow className={menuDemoStyles.Arrow}>
+                <ArrowSvg />
+              </Menu.Arrow>
+              {rowData && (
+                <React.Fragment>
+                  {menuItems.map((item) => (
+                    <Menu.Item
+                      key={item.index}
+                      onClick={() =>
+                        console.log(`Clicked ${item.label} for ${rowData.label}`)
+                      }
+                      className={menuDemoStyles.Item}
+                    >
+                      {item.label} for {rowData.label}
+                    </Menu.Item>
+                  ))}
+                </React.Fragment>
+              )}
+            </Menu.Popup>
+          </Menu.Positioner>
+        </Menu.Portal>
+      )}
+    </Menu.Root>
   );
 }
